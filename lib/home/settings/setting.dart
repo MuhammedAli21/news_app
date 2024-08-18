@@ -1,11 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:news_app/app_colors.dart';
+import 'package:news_app/home/language_model/language_bottom_sheet.dart';
+import 'package:provider/provider.dart';
 
-class Setting extends StatelessWidget {
+import '../../providers/language_provider.dart';
+
+class Setting extends StatefulWidget {
   const Setting({super.key});
 
   @override
+  State<Setting> createState() => _SettingState();
+}
+
+class _SettingState extends State<Setting> {
+  @override
   Widget build(BuildContext context) {
+    var provider = Provider.of<LanguageProvider>(context);
     return Container(
       padding: EdgeInsets.all(20),
       child: Column(
@@ -21,12 +31,12 @@ class Setting extends StatelessWidget {
             ),
             child: InkWell(
               onTap: (){
-
+                showLanguageBottomSheet();
               },
               child: Row(
                 mainAxisAlignment:  MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('English',
+                  Text(provider.appLanguage,
                   style: Theme.of(context).textTheme.titleSmall,),
                   Icon(Icons.arrow_drop_down,size: 35,)
                 ],
@@ -34,6 +44,17 @@ class Setting extends StatelessWidget {
             ),
           )
         ],
+      ),
+    );
+  }
+
+  void showLanguageBottomSheet() {
+    showModalBottomSheet<dynamic>(
+      backgroundColor: AppColors.blackColor,
+      isScrollControlled: true,
+      context: context,
+      builder: (context) => const Wrap(
+        children: [LanguageBottomSheet()],
       ),
     );
   }

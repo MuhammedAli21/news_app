@@ -6,6 +6,7 @@ import 'package:news_app/model/api_manager.dart';
 import 'package:provider/provider.dart';
 
 import '../../model/NewsRespons.dart';
+import '../../providers/language_provider.dart';
 
 class NewsWidget extends StatefulWidget {
   Source source;
@@ -21,9 +22,9 @@ class _NewsWidgetState extends State<NewsWidget> {
 
   @override
   Widget build(BuildContext context) {
-
+    var provider = Provider.of<LanguageProvider>(context);
     return FutureBuilder<NewsRespons?>(
-          future: ApiManager.getNewsBySourceId(sourceId:widget.source.id??'' ),
+          future: ApiManager.getNewsBySourceId(sourceId:widget.source.id??'' , lang: provider.appLanguage ),
           builder: (context , snapshot){
             if(snapshot.connectionState == ConnectionState.waiting){
               return Center(
@@ -36,7 +37,7 @@ class _NewsWidgetState extends State<NewsWidget> {
                 children: [
                   Text('Somthing went wrong'),
                   ElevatedButton(onPressed: (){
-                    ApiManager.getNewsBySourceId(sourceId: widget.source.id ?? '' );
+                    ApiManager.getNewsBySourceId(sourceId: widget.source.id ?? '' , lang: provider.appLanguage );
                     setState(() {
 
                     });
@@ -50,7 +51,7 @@ class _NewsWidgetState extends State<NewsWidget> {
                 children: [
                   Text(snapshot.data!.message!),
                   ElevatedButton(onPressed: (){
-                    ApiManager.getNewsBySourceId(sourceId:widget.source.id ?? '');
+                    ApiManager.getNewsBySourceId(sourceId:widget.source.id ?? '' , lang: provider.appLanguage);
                     setState(() {
 
                     });

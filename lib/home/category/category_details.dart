@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import '../../app_colors.dart';
 import '../../model/SourceResponse.dart';
 import '../../model/api_manager.dart';
+import '../../providers/language_provider.dart';
 import '../tabs/tab_widget.dart';
 
 class CategoryDetails extends StatefulWidget {
@@ -21,8 +22,9 @@ class _CategoryDetailsState extends State<CategoryDetails> {
 
   @override
   Widget build(BuildContext context) {
+    var provider = Provider.of<LanguageProvider>(context);
     return FutureBuilder<SourceResponse?>(
-        future: ApiManager.getSources(widget.category.id ) ,
+        future: ApiManager.getSources(widget.category.id ,  provider.appLanguage ) ,
         builder: (context , snapshot) {
           if(snapshot.connectionState == ConnectionState.waiting){
             return Center(
@@ -35,7 +37,7 @@ class _CategoryDetailsState extends State<CategoryDetails> {
               children: [
                 Text('Somthing went wrong'),
                 ElevatedButton(onPressed: (){
-                  ApiManager.getSources(widget.category.id);
+                  ApiManager.getSources(widget.category.id , provider.appLanguage);
                   setState(() {
 
                   });
@@ -51,7 +53,7 @@ class _CategoryDetailsState extends State<CategoryDetails> {
               children: [
                 Text(snapshot.data!.message!),
                 ElevatedButton(onPressed: (){
-                  ApiManager.getSources(widget.category.id);
+                  ApiManager.getSources(widget.category.id, provider.appLanguage);
                   setState(() {
 
                   });
