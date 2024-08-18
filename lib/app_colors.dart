@@ -11,5 +11,6 @@ static Color blueColor = Color(0xff4882CF);
 static Color grayColor = Color(0xff4F5A69);
 static Color yellowColor = Color(0xffF2D352);
 static Color blackColor = Color(0xff303030);
+static Color brownColor = Color(0xffCF7E48);
 
 }

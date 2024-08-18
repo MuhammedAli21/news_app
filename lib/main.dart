@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:news_app/home/news/new_details.dart';
 import 'package:news_app/my_theme_data.dart';
-
 import 'home/home_screen.dart';
 
 void main(){
@@ -18,9 +18,8 @@ class Myapp extends StatelessWidget {
       initialRoute: HomeScreen.routeName,
       routes: {
         HomeScreen.routeName : (context) => HomeScreen(),
+        NewDetails.routeName : (context) => NewDetails(),
       },
-
-
     );
   }
 }
