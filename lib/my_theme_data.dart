@@ -5,6 +5,7 @@ class MyThemeData{
   static final ThemeData lightTheme = ThemeData(
     primaryColor: AppColors.primaryColor,
     appBarTheme: AppBarTheme(
+      iconTheme: IconThemeData(color: AppColors.whiteColor),
       backgroundColor: AppColors.primaryColor,
       centerTitle: true,
       shape: RoundedRectangleBorder(

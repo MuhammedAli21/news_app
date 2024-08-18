@@ -3,15 +3,10 @@ import 'package:news_app/app_colors.dart';
 import 'package:news_app/home/Drawer/home_drawer.dart';
 import 'package:news_app/home/category/category_details.dart';
 import 'package:news_app/home/category/category_fragment.dart';
-import 'package:news_app/home/news/news_item.dart';
-import 'package:news_app/home/news/news_widget.dart';
 import 'package:news_app/home/settings/setting.dart';
 import 'package:news_app/model/SourceResponse.dart';
-import 'package:news_app/model/api_manager.dart';
 import 'package:news_app/model/category.dart';
 import 'package:news_app/model/search_api.dart';
-
-import '../model/NewsRespons.dart';
 
 class HomeScreen extends StatefulWidget {
   static const String routeName = 'Home_Screen';
@@ -43,7 +38,7 @@ class _HomeScreenState extends State<HomeScreen> {
             actions: [
               IconButton(onPressed: (){
                 showSearch(context: context, delegate: SearchApi());},
-                  icon: Icon(Icons.search,color: AppColors.whiteColor,))
+                  icon: Icon(Icons.search))
             ],
             title:Text(
               selectedSideMenuItem == HomeDrawer.settings ? 'Settings' :
