@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:news_app/app_colors.dart';
 import 'package:news_app/home/news/news_item.dart';
-import 'package:news_app/home/news/news_widget_view_model.dart';
 import 'package:news_app/model/SourceResponse.dart';
 import 'package:news_app/model/api_manager.dart';
 import 'package:provider/provider.dart';
@@ -18,52 +17,12 @@ class NewsWidget extends StatefulWidget {
 
 class _NewsWidgetState extends State<NewsWidget> {
 
-  NewsWidgetViewModel viewModel = NewsWidgetViewModel();
 
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    viewModel.getNewsBySourceId(widget.source.id??'');
-  }
 
   @override
   Widget build(BuildContext context) {
-    viewModel.getNewsBySourceId(widget.source.id??'');
 
-
-    return ChangeNotifierProvider(
-      create: (context) => viewModel,
-      child: Consumer<NewsWidgetViewModel>(
-        builder:(context , viewModel , child){
-          if(viewModel.errorMessage != null){
-            return Column(
-              children: [
-                Text(viewModel.errorMessage!),
-                ElevatedButton(onPressed: (){
-                  viewModel.getNewsBySourceId(widget.source.id??'');
-                }, child: Text('try again'))
-              ],
-            );
-          }
-          if(viewModel.newsList == null){
-            return Center(
-              child: CircularProgressIndicator(
-                color: AppColors.primaryColor,
-              ),
-            );
-          }else{
-            return Expanded(
-              child: ListView.builder(itemBuilder: (context  , index ){
-                return NewsItem(news:  viewModel.newsList![index]);
-              },
-                itemCount: viewModel.newsList!.length,
-                controller: ScrollController(),
-              ),
-            );
-          }
-        } ,)
-      /*FutureBuilder<NewsRespons?>(
+    return FutureBuilder<NewsRespons?>(
           future: ApiManager.getNewsBySourceId(sourceId:widget.source.id??'' ),
           builder: (context , snapshot){
             if(snapshot.connectionState == ConnectionState.waiting){
@@ -109,7 +68,6 @@ class _NewsWidgetState extends State<NewsWidget> {
               ),
             );
           }
-      ),*/
-    );
+      );
   }
 }

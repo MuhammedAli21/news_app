@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:news_app/home/category/category_detailes_view_model.dart';
 import 'package:news_app/model/category.dart';
 import 'package:provider/provider.dart';
 
@@ -20,46 +19,9 @@ class CategoryDetails extends StatefulWidget {
 
 class _CategoryDetailsState extends State<CategoryDetails> {
 
-  CategoryDetailesViewModel viewModel = CategoryDetailesViewModel();
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-
-    viewModel.getSources(widget.category.id);
-  }
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => viewModel,
-
-      child: Consumer<CategoryDetailesViewModel>(
-        builder: (context , viewModel , child){
-          if(viewModel.errorMessage != null){
-            return Column(
-              children: [
-                Text(viewModel.errorMessage!),
-                ElevatedButton(onPressed: (){
-                 viewModel.getSources(widget.category.id);
-                }, child: Text('try again'))
-              ],
-            );
-          }
-          if(viewModel.sourceList == null){
-            return Center(
-              child: CircularProgressIndicator(
-                color:  AppColors.primaryColor,
-              ),
-            );
-          }else{
-            return TabWidget(sourceList: viewModel.sourceList!);
-          }
-        }
-        ,)
-
-
-     /* FutureBuilder<SourceResponse?>(
+    return FutureBuilder<SourceResponse?>(
         future: ApiManager.getSources(widget.category.id ) ,
         builder: (context , snapshot) {
           if(snapshot.connectionState == ConnectionState.waiting){
@@ -101,7 +63,6 @@ class _CategoryDetailsState extends State<CategoryDetails> {
           var sourceList = snapshot.data!.sources!;
           return TabWidget(sourceList: sourceList);
         },
-      ),*/
-    );
+      );
   }
 }

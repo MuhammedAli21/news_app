@@ -5,7 +5,6 @@ import 'package:news_app/home/category/category_details.dart';
 import 'package:news_app/home/category/category_fragment.dart';
 import 'package:news_app/home/news/news_item.dart';
 import 'package:news_app/home/news/news_widget.dart';
-import 'package:news_app/home/news/news_widget_view_model.dart';
 import 'package:news_app/home/settings/setting.dart';
 import 'package:news_app/model/SourceResponse.dart';
 import 'package:news_app/model/api_manager.dart';
@@ -24,10 +23,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   bool isSearching = false;
   String? searchItem ;
-  NewsWidgetViewModel viewModel = NewsWidgetViewModel();
   Source? source;
-
-
 
   @override
   Widget build(BuildContext context) {
