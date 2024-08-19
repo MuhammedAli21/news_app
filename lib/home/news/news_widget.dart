@@ -18,13 +18,23 @@ class NewsWidget extends StatefulWidget {
 
 class _NewsWidgetState extends State<NewsWidget> {
 
+  String numberPage = '1';
+  var scrollController = ScrollController();
+  int page = 1;
 
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    scrollController.addListener(scrollListener);
+    //ApiManager.getNewsBySourceId();
+  }
 
   @override
   Widget build(BuildContext context) {
     var provider = Provider.of<LanguageProvider>(context);
     return FutureBuilder<NewsRespons?>(
-          future: ApiManager.getNewsBySourceId(sourceId:widget.source.id??'' , lang: provider.appLanguage ),
+          future: ApiManager.getNewsBySourceId(sourceId:widget.source.id??'' , lang: provider.appLanguage , page:numberPage ),
           builder: (context , snapshot){
             if(snapshot.connectionState == ConnectionState.waiting){
               return Center(
@@ -37,7 +47,7 @@ class _NewsWidgetState extends State<NewsWidget> {
                 children: [
                   Text('Somthing went wrong'),
                   ElevatedButton(onPressed: (){
-                    ApiManager.getNewsBySourceId(sourceId: widget.source.id ?? '' , lang: provider.appLanguage );
+                    ApiManager.getNewsBySourceId(sourceId: widget.source.id ?? '' , lang: provider.appLanguage , page: numberPage );
                     setState(() {
 
                     });
@@ -51,9 +61,8 @@ class _NewsWidgetState extends State<NewsWidget> {
                 children: [
                   Text(snapshot.data!.message!),
                   ElevatedButton(onPressed: (){
-                    ApiManager.getNewsBySourceId(sourceId:widget.source.id ?? '' , lang: provider.appLanguage);
+                    ApiManager.getNewsBySourceId(sourceId:widget.source.id ?? '' , lang: provider.appLanguage, page: numberPage);
                     setState(() {
-
                     });
                   }, child: Text('try again'))
                 ],
@@ -62,7 +71,9 @@ class _NewsWidgetState extends State<NewsWidget> {
             //Success
             var newsList = snapshot.data!.articles!;
             return Expanded(
-              child: ListView.builder(itemBuilder: (context  , index ){
+              child: ListView.builder(
+                controller: scrollController,
+                itemBuilder: (context  , index ){
                 return NewsItem(news: newsList[index]);
               },
                 itemCount: newsList.length,
@@ -70,5 +81,16 @@ class _NewsWidgetState extends State<NewsWidget> {
             );
           }
       );
+  }
+
+  void scrollListener() {
+    page = int.parse(numberPage);
+    if(scrollController.position.pixels == scrollController.position.maxScrollExtent){
+      page++;
+      numberPage=page.toString();
+      print(numberPage);
+      print('end');
+    }
+    //ApiManager.getNewsBySourceId();
   }
 }
