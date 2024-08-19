@@ -37,13 +37,14 @@ static Future<SourceResponse?> getSources([String? categoryId , String? lang]) a
 //https://newsapi.org/v2/everything?q=bitcoin&apiKey=267790771ff94a99b979989d96a92f5d
 
 static Future<NewsRespons?> getNewsBySourceId(
-    {String? sourceId , String? lang})async {
+    {String? sourceId , String? lang , String page = '1'})async {
   Uri url = Uri.https(
     ApiConstants.baseUrl,
     ApiConstants.NewsApi,
     { 'apiKey' : ApiConstants.ApiKey,
       'sources' : sourceId,
-      'language' : lang
+      'language' : lang,
+      'page' : page
     }
   );
   var newsRespons = await http.get(url);
