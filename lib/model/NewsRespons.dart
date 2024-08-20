@@ -7,9 +7,10 @@ import 'SourceResponse.dart';
 //شايل الrespons في حاله النحاجو الخطا
 class NewsRespons {
   NewsRespons({
-      this.status, 
-      this.totalResults, 
-      this.articles,});
+    this.status,
+    this.totalResults,
+    this.articles,
+  });
 
   NewsRespons.fromJson(dynamic json) {
     status = json['status'];
@@ -38,7 +39,6 @@ class NewsRespons {
     }
     return map;
   }
-
 }
 
 /// source : {"id":"wired","name":"Wired"}
@@ -52,14 +52,15 @@ class NewsRespons {
 
 class News {
   News({
-      this.source, 
-      this.author, 
-      this.title, 
-      this.description, 
-      this.url, 
-      this.urlToImage, 
-      this.publishedAt, 
-      this.content,});
+    this.source,
+    this.author,
+    this.title,
+    this.description,
+    this.url,
+    this.urlToImage,
+    this.publishedAt,
+    this.content,
+  });
 
   News.fromJson(dynamic json) {
     source = json['source'] != null ? Source.fromJson(json['source']) : null;
@@ -94,9 +95,7 @@ class News {
     map['content'] = content;
     return map;
   }
-
 }
 
 /// id : "wired"
 /// name : "Wired"
-
